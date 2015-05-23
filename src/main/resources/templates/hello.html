@@ -2,11 +2,36 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
-        <title>Hello World!</title>
+        <title>Test Exercise Kazarin A</title>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+        <script type="text/javascript">            
+            function getResult() {                
+                $.getJSON("getSystemProperties.do",
+                            {CHARS: $('#searchBox').val()},
+                            function(data) {
+                                $('#results').text('');
+
+                                for (var index in data) {
+                                    $('#results').append('<p>' + data[index] + '</p>')
+                                }
+
+                            });
+            }
+
+        </script>
     </head>
     <body>
         <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-        <form th:action="@{/logout}" method="post">
+
+        <button onclick="getResult()">Get System Properties</button>
+
+        <div id="results">
+            
+        </div>
+
+        <form th:action="@{/logout}" method="post" id="searchBox">
             <input type="submit" value="Sign Out"/>
         </form>
     </body>
